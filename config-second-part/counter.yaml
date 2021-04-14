@@ -1,0 +1,25 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: counter-part-two
+  labels:
+    app: counter-part-two
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "1"
+        autoscaling.knative.dev/minScale: "1"
+    spec:
+      containers:
+      - args:
+        - --upTo
+        - "250"
+        image: ko://github.com/maschmid/kafkachannel-backed-brokers-subscriptionnotmarkedreadybychannel/counter
+        name: user-container
+# TODO: use downward api if supported yet in serving
+        env:
+        - name: POD_NAME
+          value: counter-part-two
+        - name: POD_NAMESPACE
+          value: counter

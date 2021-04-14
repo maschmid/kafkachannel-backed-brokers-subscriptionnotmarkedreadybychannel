@@ -1,0 +1,27 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: counter-part-two
+spec:
+  broker: broker-part-two
+  filter: {}
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: counter-part-two
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: counter-part-two-faketrigger
+spec:
+  broker: broker-part-two
+  filter:
+    attributes:
+      type: doesnotexist
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: counter-part-two

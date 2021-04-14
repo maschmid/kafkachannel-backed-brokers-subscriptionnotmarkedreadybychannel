@@ -1,0 +1,27 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: counter
+spec:
+  broker: broker
+  filter: {}
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: counter
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: counter-faketrigger
+spec:
+  broker: broker
+  filter:
+    attributes:
+      type: doesnotexist
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: counter

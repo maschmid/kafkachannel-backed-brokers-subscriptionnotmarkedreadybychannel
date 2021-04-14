@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sender-part-two
+  labels:
+    bindings.knative.dev/include: "true"
+    app: sender-part-two
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "1"
+        autoscaling.knative.dev/minScale: "1"
+    spec:
+      containers:
+      - env:
+# TODO: use downward API if supported by serving
+        - name: POD_NAME
+          value: sender-part-two
+        - name: POD_NAMESPACE
+          value: foobar
+        image: ko://github.com/maschmid/kafkachannel-backed-brokers-subscriptionnotmarkedreadybychannel/sender

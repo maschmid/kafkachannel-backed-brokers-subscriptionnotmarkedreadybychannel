@@ -1,0 +1,16 @@
+apiVersion: sources.knative.dev/v1
+kind: SinkBinding
+metadata:
+  name: sender-part-two
+spec:
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: broker-part-two
+  subject:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    selector:
+      matchLabels:
+        app: sender-part-two

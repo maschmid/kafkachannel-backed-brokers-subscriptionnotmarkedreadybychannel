@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: broker
+data:
+  channelTemplateSpec: |-
+    apiVersion: messaging.knative.dev/v1beta1
+    kind: KafkaChannel
+    spec:
+        numPartitions: 8
+        replicationFactor: 3
+---
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  name: broker
+spec:
+  config:
+    apiVersion: v1
+    kind: ConfigMap
+    name: broker
+  delivery:
+    retry: 100
+    backoffPolicy: linear
+    backoffDelay: "PT1S"
