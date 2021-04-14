@@ -33,3 +33,6 @@ make apply-second-part
 
 # Watch the Subscription, see if it becomes Ready
 watch kubectl get subscriptions
+
+# If the problem occurs, you'd see the Subscriptions hang in
+# `SubscriptionNotMarkedReadyByChannel` state for tens of minutes
